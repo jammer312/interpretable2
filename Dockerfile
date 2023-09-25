@@ -13,13 +13,21 @@ RUN pip3 install tensorflow==2.9.1 keras==2.9.0 numpy==1.22.4 scipy==1.8.1 matpl
 
 RUN apt-get -y install ffmpeg libavcodec-extra vim git
 
+RUN apt-get -y install jupyter-notebook
+
+RUN pip3 install markupsafe==2.0.1
+
 RUN mkdir /project
 WORKDIR /project
 ADD . /project
 RUN pip3 install .
 
-RUN echo "You should think about possibly upgrading these outdated packages"
-RUN pip3 list --outdated
+RUN pip install --upgrade ipywidgets
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+RUN pip install librosa
+
+#RUN echo "You should think about possibly upgrading these outdated packages"
+#RUN pip3 list --outdated
 
 # NOTE to contributors: When changing/adding packages, please make sure that the packages are consistent with those
 # present within the requirements_test.txt files
